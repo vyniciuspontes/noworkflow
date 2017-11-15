@@ -63,4 +63,4 @@ class MetaProfiler(object):                                                     
                 writter = csv.writer(fil)
                 writter.writerows(rows)
 
-meta_profiler = MetaProfiler(active=False)                                       # pylint: disable=invalid-name
+meta_profiler = MetaProfiler(active=True)                                       # pylint: disable=invalid-name

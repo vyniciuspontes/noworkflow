@@ -10,8 +10,12 @@ import argparse
 import os
 import sys
 
+
 from ..collection.metadata import Metascript
 from ..persistence.models import Tag, Trial, Argument
+#import noworkflow.now.persistence as Persistence
+from ..persistence import content
+from ..persistence.content_database_pure_git import ContentDatabasePureGit
 from ..utils import io, metaprofiler
 
 from .command import Command
@@ -61,6 +65,13 @@ def run(metascript, args=None):
         metascript.deployment.store_provenance()
         metascript.definition.store_provenance()
         metascript.execution.store_provenance()
+
+
+        content.commit()
+
+        if args.gargabe_collection:
+            print("garbage collection")
+            content.gc()
 
         Tag.create_automatic_tag(*metascript.create_automatic_tag_args())
         metaprofiler.meta_profiler.save()
@@ -135,12 +146,18 @@ class Run(Command):
                      "be created in this path. Default to script directory")
         add_arg("-v", "--verbose", action="store_true",
                 help="increase output verbosity")
+        add_arg("-g", "--git", action="store_true",
+                help="use git content database")
+        add_arg("-gc", "--gargabe_collection", action="store_true",
+                help="collect the garbage on content database")
 
         # Internal
         add_cmd("--create_last", action="store_true", help=argparse.SUPPRESS)
         add_arg("--meta", action="store_true", help=argparse.SUPPRESS)
 
     def execute(self, args):
+        if args.git:
+            print("using git: {0}".format(args.git))
         if args.meta:
             metaprofiler.meta_profiler.active = True
             metaprofiler.meta_profiler.data["cmd"] = " ".join(sys.argv)

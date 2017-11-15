@@ -8,13 +8,13 @@ from __future__ import (absolute_import, print_function,
 from .content_database_standart import ContentDatabaseStandart
 
 from .content_database_pure_git import ContentDatabasePureGit
+from .content_database_dulwich import ContentDatbaseDulwich
 
 
 CONTENT_DIRNAME = "content"
 
 
 class ContentDatabaseFactory(object):
-    """Content Database deal with storage of file content in disk"""
 
     @staticmethod
     def factory(persistence_config):
