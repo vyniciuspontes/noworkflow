@@ -83,4 +83,3 @@ class Execution(object):
         )
         if self.msg:
             print_msg(self.msg, self.force_msg)
-        print('done run store_provenance execution')

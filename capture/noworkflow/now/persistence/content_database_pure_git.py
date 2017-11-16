@@ -64,9 +64,9 @@ class ContentDatabasePureGit(ContentDatabase):
 
         return git_system.get(content_hash, self.content_path)
 
-    def commit(self):
+    def commit_content(self, message):
         tree = git_system.write_tree(self.content_path)
-        git_system.commit_tree(self.content_path, tree, "message")
+        git_system.commit_tree(self.content_path, tree, message)
 
     def gc(self):
         git_system.garbage_collection(self.content_path)

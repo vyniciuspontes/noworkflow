@@ -25,3 +25,9 @@ class ContentDatabase(object):
     def set_path(self, config):
         """Set content_path"""
         self.content_path = join(config.provenance_path, CONTENT_DIRNAME)
+
+    def commit_content(self, message):
+        pass
+
+    def gc(self):
+        pass

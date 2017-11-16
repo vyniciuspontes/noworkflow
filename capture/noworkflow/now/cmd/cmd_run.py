@@ -10,10 +10,9 @@ import argparse
 import os
 import sys
 
-
 from ..collection.metadata import Metascript
 from ..persistence.models import Tag, Trial, Argument
-#import noworkflow.now.persistence as Persistence
+# import noworkflow.now.persistence as Persistence
 from ..persistence import content
 from ..persistence.content_database_pure_git import ContentDatabasePureGit
 from ..utils import io, metaprofiler
@@ -30,8 +29,9 @@ def non_negative(string):
     return value
 
 
-class ScriptArgs(argparse.Action):                                               # pylint: disable=too-few-public-methods
+class ScriptArgs(argparse.Action):  # pylint: disable=too-few-public-methods
     """Action to create script attribute"""
+
     def __call__(self, parser, namespace, values, option_string=None):
         if not values:
             raise argparse.ArgumentError(
@@ -42,7 +42,7 @@ class ScriptArgs(argparse.Action):                                              
         if not os.path.exists(script):
             raise argparse.ArgumentError(
                 self, "can't open file '{}': "
-                "[Errno 2] No such file or directory".format(values[0]))
+                      "[Errno 2] No such file or directory".format(values[0]))
 
         setattr(namespace, self.dest, script)
         setattr(namespace, "argv", values)
@@ -66,8 +66,7 @@ def run(metascript, args=None):
         metascript.definition.store_provenance()
         metascript.execution.store_provenance()
 
-
-        content.commit()
+        content.commit_content("message")
 
         if args.gargabe_collection:
             print("garbage collection")
@@ -178,4 +177,3 @@ class Run(Command):
 
         # Run script
         run(metascript, args)
-

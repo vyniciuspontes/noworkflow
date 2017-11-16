@@ -18,4 +18,4 @@ class ContentDatabaseFactory(object):
 
     @staticmethod
     def factory(persistence_config):
-        return ContentDatabasePureGit(persistence_config)
+        return ContentDatbaseDulwich(persistence_config)
