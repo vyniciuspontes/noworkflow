@@ -66,7 +66,12 @@ def run(metascript, args=None):
         metascript.definition.store_provenance()
         metascript.execution.store_provenance()
 
-        content.commit_content("message")
+        if args.message:
+            message = args.message
+        else:
+            message = 'No message'
+
+        content.commit_content(message)
 
         if args.gargabe_collection:
             print("garbage collection")
@@ -149,6 +154,10 @@ class Run(Command):
                 help="use git content database")
         add_arg("-gc", "--gargabe_collection", action="store_true",
                 help="collect the garbage on content database")
+
+        add_arg("--message", type=str,
+                help="This option allow add a message to the commit of the trial")
+
 
         # Internal
         add_cmd("--create_last", action="store_true", help=argparse.SUPPRESS)

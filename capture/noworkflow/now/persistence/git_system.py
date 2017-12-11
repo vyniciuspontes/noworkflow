@@ -75,7 +75,7 @@ def commit_tree(git_path, tree_hash, commit_message):
     p = subprocess.Popen(["git", "commit-tree", tree_hash, "-m", commit_message],
                          cwd=git_path, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
-    p.kill()
+    p.wait()
     if err:
         raise OSError(err.decode())
     elif out:
@@ -83,10 +83,10 @@ def commit_tree(git_path, tree_hash, commit_message):
 
 
 def garbage_collection(git_path):
-    p = subprocess.Popen(["git", "gc"], cwd=git_path,
+    p = subprocess.Popen(['git gc', '--quiet'], cwd=git_path, shell=True,
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
-    p.kill()
+    p.wait()
     if err:
         raise OSError(err.decode())
 

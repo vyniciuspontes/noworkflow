@@ -77,7 +77,7 @@ class ContentDatbaseDulwich(ContentDatabase):
         Arguments:
         content_hash -- content hash code
         """
-        return self.__get_repo().__getitem__(content_hash)
+        return self.__get_repo().__getitem__(content_hash.encode()).as_pretty_string()
 
     def __create_commit_object(self, message, tree, parent=None):
         """creates a commit object
